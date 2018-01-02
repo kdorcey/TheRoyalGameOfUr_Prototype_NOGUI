@@ -32,6 +32,8 @@ public class GameBoard {
         updateBoard();
     }
 
+
+
     public static void updateBoard(){
         for(int y=0; y<3; y++){
             for (int x=0; x<8; x++){
@@ -58,9 +60,21 @@ public class GameBoard {
         return boardLocation;
     }
 
-    public static boolean winCheck(Player player1, Player player2){
+    public static boolean winCheck(Player lastPlayerToMove){
+        boolean win = false;
+        int finishedStoneCount = 0;
 
+        for(int i=0; i<7; i++){
+            if(lastPlayerToMove.getPlayerStones()[i].isStoneFinished()){
+                finishedStoneCount++;
+            }
+        }
+
+        if(finishedStoneCount ==7){
+            win = true;
+        }
+
+        return win;
     }
-
 
 }

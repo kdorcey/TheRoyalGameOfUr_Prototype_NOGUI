@@ -2,7 +2,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RunGame {
-    public static void main (String args[]){
+    public static void runLocally (){
         Random diceRoll = new Random();
         Scanner reader = new Scanner(System.in);
         GameBoard testBoard = new GameBoard();
@@ -10,32 +10,44 @@ public class RunGame {
 
         Player player1 = new Player(1);
         Player player2 = new Player(2);
-
-        //testBoard.printBoard();
-
-
+        Player currentPlayer;
+        Player lastPlayer;
         int turnCount =1;
         //int roll = diceRoll.nextInt(3);
-        int roll = Integer.parseInt(reader.nextLine());
 
+        int onlineCheck = Integer.parseInt(reader.nextLine());
+        while (true) {
+            if (turnCount % 2 == 0) {
+                currentPlayer = player2;
+                lastPlayer = player1;
+            } else {
+                currentPlayer = player1;
+                lastPlayer = player2;
+            }
+            //int roll = Integer.parseInt(reader.nextLine());
+            int roll = diceRoll.nextInt(3);
 
-        while(true){
-            System.out.println("Roll: "+roll);
+            System.out.println(currentPlayer + " roll: " + roll);
             System.out.println("pick stone to move");
 
             int stoneToMove = Integer.parseInt(reader.nextLine());
 
-            if(player1.checkValidMove(stoneToMove,roll)){
-                player1.stoneToMove(stoneToMove,roll);
+            if (currentPlayer.checkValidMove(stoneToMove, roll)) {
+                currentPlayer.stoneToMove(stoneToMove, roll, lastPlayer);
                 testBoard.updateBoard();
                 turnCount++;
-                //roll = diceRoll.nextInt(3);
-                roll = Integer.parseInt(reader.nextLine());
 
-            }
-            else{
+            } else {
                 System.out.println("Invalid move pick different stone");
+            }
+
+            if (GameBoard.winCheck(currentPlayer)) {
+                System.out.println(currentPlayer + "wins!");
+                break;
             }
         }
     }
+
+
 }
+

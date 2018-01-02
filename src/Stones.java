@@ -39,6 +39,7 @@ public class Stones {
         else {
             playerMoveSet.get(spacesMoved).setPlayerOnSquareBoolean();
             playerMoveSet.get(spacesMoved).setPlayerNumberOnSquare(owner);
+            playerMoveSet.get(spacesMoved).setStoneOnSquare(this);
         }
 
     }
@@ -59,6 +60,8 @@ public class Stones {
                 {
                     //reset other player's stone
                     validMoveStone = true;
+                    playerMoveSet.get(testMove).getStoneOnSquare().resetStone();
+
                 }
             }
             else{
@@ -73,6 +76,12 @@ public class Stones {
         }
 
         return validMoveStone;
+    }
+
+    public void resetStone(){
+        spacesMoved = 0;
+        xboardPosition = -1;
+        yboardPosition = -1;
     }
 
 
