@@ -14,7 +14,7 @@ public class Driver {
                 OnlineGame.hostGameOnline();
             }
             else if (hostCheck ==2){
-                OnlineGame.joinGameOnline();
+                OnlineGame.joinGameOnline("127.0.0.1");
             }
         }
         else if(onlineCheck ==2){
