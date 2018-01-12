@@ -135,7 +135,7 @@ public class OnlineGame {
 
     public static void sendData(int diceMove, int stoneMove) throws IOException{
         String move = diceMove+""+stoneMove;
-        System.out.println("move to send: "+move);
+        System.out.println("waiting for opponent...");
         output.writeObject(move);
         output.flush();
     }

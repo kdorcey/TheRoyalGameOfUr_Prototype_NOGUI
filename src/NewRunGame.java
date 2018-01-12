@@ -33,6 +33,7 @@ public class NewRunGame {
 
     public void selfNextMove(){
         int rollz = diceRoll.nextInt(3);
+        //int rollz = Integer.parseInt(reader.nextLine());
         System.out.println("rollz: "+rollz);
 
         if(rollz !=0) {
@@ -68,9 +69,11 @@ public class NewRunGame {
     public void otherPlayerMove(int enemyRoll, int enemyStoneMove) {
         if (enemyRoll != 0) {
 
+            connectedPlayer.checkValidMove(enemyStoneMove,enemyRoll); //this is a formality that needs to be done in order to check for a "sorry!" move
             connectedPlayer.stoneToMove(enemyStoneMove, enemyRoll, localPlayer);
             gameBoard.updateBoard();
             turnCount++;
+
 
         } else if (enemyRoll == 0){
             gameBoard.updateBoard();
