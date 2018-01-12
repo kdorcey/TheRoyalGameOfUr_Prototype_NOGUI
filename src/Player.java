@@ -24,6 +24,7 @@ public class Player {
 
     }
 
+    //checks if a move is valid by doing the move and testing for parameters that would invalidate it (ie: out of bounds, stone not existing, or if the move would cause two stones owned by the same player to collide
     public boolean checkValidMove(int stoneNumber, int roll) {
         boolean validMove = false;
 

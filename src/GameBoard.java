@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /***
  * GAMEBOARD MUST BE INSTANTIATED BEFORE THE PLAYER OBJECTS
  */
@@ -11,6 +9,8 @@ public class GameBoard {
     public GameBoard(){
         setBoard();
     }
+
+
 
     private static void setBoard(){
         for(int y=0; y<3; y++){
@@ -35,11 +35,18 @@ public class GameBoard {
 
 
     public static void updateBoard(){
+        System.out.println("------------------------");
         for(int y=0; y<3; y++){
             for (int x=0; x<8; x++){
                 if(boardLocation[x][y].isSquareVisible()){
                     if(boardLocation[x][y].isPlayerOnSquare()){
-                        System.out.print("O");
+                        int playerOnSquare = boardLocation[x][y].getPlayerNumberOnSquare().getPlayerNumber();
+                        if(playerOnSquare ==1){
+                            System.out.print("O");
+                        }
+                        else{
+                            System.out.print("Q");
+                        }
                     }
                     else{
                         System.out.print("X");

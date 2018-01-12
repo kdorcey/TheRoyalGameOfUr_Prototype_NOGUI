@@ -1,10 +1,12 @@
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 public class OnlineGame {
     private static Random dice;
@@ -76,12 +78,15 @@ public class OnlineGame {
 
         do{
             try{
-                currentGame.selfNextMove();
                 recievedMove = (String) input.readObject();
-                int diceRoll = recievedMove.charAt(0);
-                int stoneMove = recievedMove.charAt(1);
+                System.out.println(recievedMove);
+                int diceRoll =Integer.parseInt(Character.toString(recievedMove.charAt(0)));
+                int stoneMove =Integer.parseInt(Character.toString(recievedMove.charAt(1)));
+                System.out.println("diceroll: "+diceRoll);
+                System.out.println("stoneMove: "+stoneMove);
                 currentGame.otherPlayerMove(diceRoll, stoneMove);
 
+                currentGame.selfNextMove();
 
             } catch(ClassNotFoundException error2){
                 System.out.println("Problem with input");
@@ -114,8 +119,8 @@ public class OnlineGame {
             try{
                 currentGame.selfNextMove();
                 recievedMove = (String) input.readObject();
-                int diceRoll = recievedMove.charAt(0);
-                int stoneMove = recievedMove.charAt(1);
+                int diceRoll =Integer.parseInt(Character.toString(recievedMove.charAt(0)));
+                int stoneMove =Integer.parseInt(Character.toString(recievedMove.charAt(1)));
                 currentGame.otherPlayerMove(diceRoll, stoneMove);
 
 
@@ -130,6 +135,7 @@ public class OnlineGame {
 
     public static void sendData(int diceMove, int stoneMove) throws IOException{
         String move = diceMove+""+stoneMove;
+        System.out.println("move to send: "+move);
         output.writeObject(move);
         output.flush();
     }

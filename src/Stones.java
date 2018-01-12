@@ -48,7 +48,8 @@ public class Stones {
         boolean validMoveStone = false;
         int testMove = spacesMoved + diceRoll;
         System.out.println("test move: "+testMove);
-        if(testMove <14) //checks that the stone exits with an exact throw
+
+        if(testMove <14 && diceRoll !=0) //checks that the stone exits with an exact throw
         {
             if (playerMoveSet.get(testMove).isPlayerOnSquare() == true) //checks if a player is on the square
             {
@@ -69,6 +70,9 @@ public class Stones {
             }
         }
         else if (testMove == 14){
+            validMoveStone = true;
+        }
+        else if(diceRoll ==0){
             validMoveStone = true;
         }
         else{

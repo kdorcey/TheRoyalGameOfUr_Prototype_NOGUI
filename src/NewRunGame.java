@@ -32,46 +32,53 @@ public class NewRunGame {
     }
 
     public void selfNextMove(){
-        int roll = diceRoll.nextInt(3);
-        System.out.println("roll: "+roll);
-        System.out.println("pick stone to move");
-        int stoneToMove = Integer.parseInt(reader.nextLine());
+        int rollz = diceRoll.nextInt(3);
+        System.out.println("rollz: "+rollz);
 
-        if (localPlayer.checkValidMove(stoneToMove, roll)) {
-            localPlayer.stoneToMove(stoneToMove, roll, connectedPlayer);
+        if(rollz !=0) {
+            System.out.println("pick stone to move");
+            int stoneToMove = Integer.parseInt(reader.nextLine());
+            if (localPlayer.checkValidMove(stoneToMove, rollz)) {
+                localPlayer.stoneToMove(stoneToMove, rollz, connectedPlayer);
+                gameBoard.updateBoard();
+                turnCount++;
+                try {
+                    OnlineGame.sendData(rollz, stoneToMove);
+                } catch (IOException error) {
+                    System.out.println("Error sending move from host " + error);
+                }
+
+            } else {
+                System.out.println("Invalid move pick different stone");
+            }
+        }
+        else if (rollz == 0){
+            System.out.println("Move skipped!");
             gameBoard.updateBoard();
             turnCount++;
-            String moveInfo = diceRoll+""+stoneToMove;
-            try {
-                OnlineGame.sendData(roll, stoneToMove);
-            } catch (IOException error){
-                System.out.println("Error sending move from host "+error);
-            }
 
-        } else {
-            System.out.println("Invalid move pick different stone");
+            try {
+                OnlineGame.sendData(rollz, 9);
+            } catch (IOException error) {
+                System.out.println("Error sending move from host " + error);
+            }
         }
     }
 
-    public void otherPlayerMove(int enemyRoll, int enemyStoneMove){
-        int roll = enemyRoll;
-        System.out.println("roll: "+roll);
-        System.out.println("pick stone to move");
-        int stoneToMove = enemyStoneMove;
+    public void otherPlayerMove(int enemyRoll, int enemyStoneMove) {
+        if (enemyRoll != 0) {
 
-        if (connectedPlayer.checkValidMove(stoneToMove, roll)) {
-            connectedPlayer.stoneToMove(stoneToMove, roll, localPlayer);
+            connectedPlayer.stoneToMove(enemyStoneMove, enemyRoll, localPlayer);
             gameBoard.updateBoard();
             turnCount++;
-            try {
-                OnlineGame.sendData(roll,stoneToMove);
-            } catch (IOException error){
-                System.out.println("Error sending move from host "+error);
-            }
 
-        } else {
-            System.out.println("Invalid move pick different stone");
+        } else if (enemyRoll == 0){
+            gameBoard.updateBoard();
+            turnCount++;
         }
     }
+
+
+
 
 }

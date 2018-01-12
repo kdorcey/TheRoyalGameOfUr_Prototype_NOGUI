@@ -15,21 +15,22 @@ public class RunGame {
         int turnCount =1;
         //int roll = diceRoll.nextInt(3);
 
-        int onlineCheck = Integer.parseInt(reader.nextLine());
         while (true) {
+
             if (turnCount % 2 == 0) {
+                //player 1 will always go first
                 currentPlayer = player2;
                 lastPlayer = player1;
             } else {
                 currentPlayer = player1;
                 lastPlayer = player2;
             }
+
             //int roll = Integer.parseInt(reader.nextLine());
             int roll = diceRoll.nextInt(3);
 
             System.out.println(currentPlayer + " roll: " + roll);
             System.out.println("pick stone to move");
-
             int stoneToMove = Integer.parseInt(reader.nextLine());
 
             if (currentPlayer.checkValidMove(stoneToMove, roll)) {
